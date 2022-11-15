@@ -3,7 +3,7 @@ import { useContext, } from 'react';
 import { ShowModalContext } from '../../context/showmodal.context';
 import { TodoContext } from '../../context/todo.context';
 
-import FormModal from '../../components/form-modal/form-modal.component';
+//import FormModal from '../../components/form-modal/form-modal.component';
 import ToDoListComponent from '../../components/todo-list/todo-list.component'
 
 import './homepage.styles.scss';
@@ -13,17 +13,17 @@ const HomePage = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
     const { todoList } = useContext(TodoContext);
 
-    const sortFieldWithHighPriority = () => {
-        // todoList.forEach((item) => {
-        //     if (item.priority === "high") {
-        //         sortedField.push(item);
-        //         console.log('done');
-        //     }
-        // });
-        //console.log(sortedField);
-        //return sortedField;
-        console.log(todoList.sort());
-    }
+    //const sortFieldWithHighPriority = () => {
+    // todoList.forEach((item) => {
+    //     if (item.priority === "high") {
+    //         sortedField.push(item);
+    //         console.log('done');
+    //     }
+    // });
+    //console.log(sortedField);
+    //return sortedField;
+    // console.log(todoList.sort());
+    //}
 
     const toggleShowModal = () => {
         setShowModal(!showModal);
@@ -56,8 +56,7 @@ const HomePage = () => {
                     + Add a todo
                 </button>
             </span>
-            <button onClick={sortFieldWithHighPriority}>High</button>
-            {showModal ? (<FormModal />) : null}
+
         </div>
     );
 }
