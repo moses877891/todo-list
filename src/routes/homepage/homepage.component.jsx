@@ -12,7 +12,6 @@ import './homepage.styles.scss';
 const HomePage = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
     const { todoList } = useContext(TodoContext);
-    const sortedField = [];
 
     const sortFieldWithHighPriority = () => {
         // todoList.forEach((item) => {
@@ -58,7 +57,6 @@ const HomePage = () => {
                 </button>
             </span>
             <button onClick={sortFieldWithHighPriority}>High</button>
-            {sortedField}
             {showModal ? (<FormModal />) : null}
         </div>
     );
