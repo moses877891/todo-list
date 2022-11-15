@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+
+import { BrowserRouter } from 'react-router-dom';
+import { ShowModalProvider } from './context/showmodal.context';
+import { TodoProvider } from './context/todo.context';
+
 import App from './App';
+
 import reportWebVitals from './reportWebVitals';
+
+import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <TodoProvider>
+        <ShowModalProvider>
+          <App />
+        </ShowModalProvider>
+      </TodoProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
