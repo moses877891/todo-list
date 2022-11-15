@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, } from 'react';
 
 import { ShowModalContext } from '../../context/showmodal.context';
 import { TodoContext } from '../../context/todo.context';
@@ -11,7 +11,7 @@ import './homepage.styles.scss';
 
 const HomePage = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
-    const { todoList, setTodoList } = useContext(TodoContext);
+    const { todoList } = useContext(TodoContext);
     const sortedField = [];
 
     const sortFieldWithHighPriority = () => {
