@@ -12,7 +12,7 @@ const defaultFormFields = {
 
 const FormModal = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
-    const { todoList, addItemtoToDoList } = useContext(TodoContext);
+    const { addItemtoToDoList } = useContext(TodoContext);
 
     const [formField, setFormField] = useState(defaultFormFields);
     const { toDo, note } = formField;
