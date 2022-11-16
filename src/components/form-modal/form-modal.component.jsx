@@ -19,7 +19,6 @@ const FormModal = () => {
 
     const toggleShowModal = () => {
         setShowModal(!showModal);
-        console.log(showModal);
     }
 
     const handleChange = (event) => {
@@ -28,29 +27,28 @@ const FormModal = () => {
         setFormField({
             ...formField,
             [name]: value,
-            date: new Date().toLocaleString()
+            //date: new Date().toLocaleString()
         });
     }
 
     const addAToDoList = () => addItemtoToDoList(formField);
 
     const handleSubmit = (event) => {
+        addAToDoList();
         event.preventDefault();
         if (toDo && note) {
             setShowModal(false);
         }
 
-        addAToDoList();
     }
 
     return (
         <>
-            <div className={`overflow-y-auto overflow-x-hidden fixed top-0 
-            right-0 left-0 z-50 w-full md:inset-0 h-modal 
-            md:h-full flex justify-center ${showModal ? ' bg-white' : null}`}
+            <div className='overflow-y-auto overflow-x-hidden fixed top-0 
+            right-0 left-0 z-50 w-full md:inset-0 md:h-full flex justify-center'
             >
-                <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-                    <div className="relative bg-slate-300 rounded-lg shadow dark:bg-gray-700">
+                <div className="relat p-4 w-full max-w-md h-full md:h-auto">
+                    <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
                             <h3 className="text-3xl font-light text-zinc-600">Add a ToDo</h3>
                             <button
@@ -69,9 +67,7 @@ const FormModal = () => {
                                 <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
-                                        focus:border-blue-500 block w-full p-2.5 
-                                        dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                                         dark:text-white'
+                                        focus:border-blue-500 block w-full p-2.5'
                                     type="text"
                                     name='toDo'
                                     value={toDo}
@@ -80,13 +76,11 @@ const FormModal = () => {
                                 />
 
                                 <label className='block my-2 text-sm font-medium
-                                        text-zinc-600 dark:text-gray-300'>Note</label>
+                                        text-zinc-600'>Note</label>
                                 <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
-                                        focus:border-blue-500 block w-full p-2.5 
-                                        dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                                         dark:text-white'
+                                        focus:border-blue-500 block w-full p-2.5'
                                     type="text"
                                     name='note'
                                     value={note}
@@ -99,9 +93,7 @@ const FormModal = () => {
                                 <select className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
-                                        focus:border-blue-500 block w-full p-2.5 
-                                        dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                                         dark:text-white'
+                                        focus:border-blue-500 block w-full p-2.5'
                                     name='priority'
                                     onChange={handleChange}
                                 >
@@ -116,14 +108,11 @@ const FormModal = () => {
                                         <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
-                                        focus:border-blue-500 block w-full p-2.5 
-                                        dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                                        dark:text-white' type="text" value={new Date().toLocaleDateString()} 
+                                        focus:border-blue-500 block w-full p-2.5' 
+                                        type="text" value={new Date().toLocaleDateString()} 
                                         />
                                         */
                                 }
-
-
 
                                 <div className="flex items-center justify-end py-3 border-t border-solid border-blueGray-200 rounded-b">
                                     <button

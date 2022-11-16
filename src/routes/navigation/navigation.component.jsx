@@ -1,27 +1,13 @@
-import { Outlet } from 'react-router-dom';
-import { useContext } from 'react';
-
-import { ShowModalContext } from '../../context/showmodal.context';
+import { Link, Outlet } from 'react-router-dom';
 
 import './navigation.styles.scss';
 
 const Navigation = () => {
-    const { showModal, setShowModal } = useContext(ShowModalContext);
-
-    const toggleShowModal = () => {
-        setShowModal(!showModal);
-        console.log(showModal);
-    }
 
     return (
         <>
             <div className='flex justify-between pt-2 px-3 pb-4 border-b'>
-                <p className=' font-semibold text-3xl'>ToDo List</p>
-                <span className=' bg-slate-300 rounded-md py-2 px-3'
-                    onClick={toggleShowModal}
-                >
-                    + Add
-                </span>
+                <Link to='/' className=' font-semibold text-3xl'>ToDo List</Link>
             </div>
             <Outlet />
         </>
