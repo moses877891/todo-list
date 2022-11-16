@@ -9,6 +9,7 @@ const removeList = (todoList, listToRemove) => {
 }
 
 const groupListWithPriority = (priorityValue, list) => {
+    // eslint-disable-next-line array-callback-return
     return list.filter((item) => {
         if (item.priority === priorityValue) {
             return item;
