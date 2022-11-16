@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { TodoContext } from "../../context/todo.context";
 
 import ToDoListComponent from "../todo-list/todo-list.component";
 
 const TodoTable = () => {
-    const { todoList, setTodoList } = useContext(TodoContext);
-    const [order, setOrder] = useState("ASC");
+    const { todoList } = useContext(TodoContext);
+    // const [order, setOrder] = useState("ASC");
 
     // const sorting = (col) => {
     //     if (order === 'ASC') {
