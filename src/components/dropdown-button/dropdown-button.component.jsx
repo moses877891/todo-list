@@ -7,16 +7,24 @@ import './dropdown-button.styles.scss';
 
 const DropDownButton = () => {
     const [showDropDown, setShowDropDown] = useState(false);
-    const { groupItemsWithPriority } = useContext(TodoContext);
+    const { groupedHigh, groupedAverage, groupedLow, grouped, setGroupList } = useContext(TodoContext);
 
     const toggleDropDown = () => {
         setShowDropDown(!showDropDown);
     }
 
-    const handleMenu = () => {
-        setShowDropDown(false);
-    };
-
+    const groupItemWithHigh = () => {
+        grouped();
+        setGroupList(groupedHigh);
+    }
+    const groupItemWithAverage = () => {
+        grouped();
+        setGroupList(groupedAverage);
+    }
+    const groupItemWithLow = () => {
+        grouped();
+        setGroupList(groupedLow);
+    }
 
     return (
         <div>
@@ -30,35 +38,32 @@ const DropDownButton = () => {
                         <ul className="menu flex flex-col">
                             <Link to='/groupByPriority' className="link">
                                 <li className="menu-item">
-                                    <button onClick={() => {
-                                        groupItemsWithPriority('high');
-                                        handleMenu();
+                                    <p onClick={() => {
+                                        groupItemWithHigh();
                                     }}
                                         className=' font-medium'>
                                         high
-                                    </button>
+                                    </p>
                                 </li>
                             </Link>
                             <Link to='/groupByPriority' className="link">
                                 <li className="menu-item">
-                                    <button onClick={() => {
-                                        groupItemsWithPriority('average');
-                                        handleMenu();
+                                    <p onClick={() => {
+                                        groupItemWithAverage();
                                     }}
                                         className=' font-medium'>
                                         average
-                                    </button>
+                                    </p>
                                 </li>
                             </Link>
                             <Link to='/groupByPriority' className="link">
                                 <li className="menu-item">
-                                    <button onClick={() => {
-                                        groupItemsWithPriority('low');
-                                        handleMenu();
+                                    <p onClick={() => {
+                                        groupItemWithLow();
                                     }}
                                         className=' font-medium'>
                                         low
-                                    </button>
+                                    </p>
                                 </li>
                             </Link>
                         </ul>

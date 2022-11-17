@@ -6,7 +6,7 @@ import { TodoContext } from "../../context/todo.context";
 import GroupByToDoListComponent from "../../components/groupby-todo-list/groupby-todo-list.component";
 
 const GroupBy = () => {
-    const { sortedList } = useContext(TodoContext);
+    const { groupList } = useContext(TodoContext);
 
     return (
         <div>
@@ -21,7 +21,7 @@ const GroupBy = () => {
                     </tr>
                 </thead>
                 {
-                    sortedList.map((todo) => (
+                    groupList && groupList.map((todo) => (
                         <GroupByToDoListComponent key={todo.date} list={todo} />
                     ))}
             </table>

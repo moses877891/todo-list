@@ -13,7 +13,7 @@ const TodoTable = () => {
         if (orderToDo === 'ASC') {
             const sorted = [...todoList].sort((a, b) =>
 
-                a.toDo.toString().toLowerCase() > b.toDo.toString().toLowerCase() ? 1 : -1
+                a.toDo.toString().toLowerCase() < b.toDo.toString().toLowerCase() ? 1 : -1
 
             );
 
@@ -23,7 +23,7 @@ const TodoTable = () => {
         if (orderToDo === 'DSC') {
             const sorted = [...todoList].sort((a, b) =>
 
-                a.toDo.toString().toLowerCase() < b.toDo.toString().toLowerCase() ? 1 : -1
+                a.toDo.toString().toLowerCase() > b.toDo.toString().toLowerCase() ? 1 : -1
 
             );
 
@@ -36,7 +36,7 @@ const TodoTable = () => {
         if (orderDate === 'ASC') {
             const sorted = [...todoList].sort((a, b) =>
 
-                a.date > b.date ? 1 : -1
+                a.date < b.date ? 1 : -1
 
             );
 
@@ -46,7 +46,7 @@ const TodoTable = () => {
         if (orderDate === 'DSC') {
             const sorted = [...todoList].sort((a, b) =>
 
-                a.date < b.date ? 1 : -1
+                a.date > b.date ? 1 : -1
 
             );
 
@@ -60,21 +60,27 @@ const TodoTable = () => {
             <table className="w-full text-sm text-left text-gray-700 dark:text-gray-400">
                 <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700'>
                     <tr>
-                        <th className='py-3 px-6 cursor-pointer' onClick={() => sortingToDo()}>toDo
-                            {
-                                orderToDo === 'ASC' ?
-                                    (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
-                                        <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
-                            }
+                        <th className='py-3 px-6 cursor-pointer'>
+                            <p onClick={() => sortingToDo()}>
+                                toDo
+                                {
+                                    orderToDo === 'ASC' ?
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
+                                            <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
+                                }
+                            </p>
                         </th>
                         <th className='py-3 px-6'>note</th>
                         <th className='py-3 px-6'>priority</th>
-                        <th className='py-3 px-6 cursor-pointer' onClick={() => sortingDate()}>date
-                            {
-                                orderDate === 'ASC' ?
-                                    (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
-                                        <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
-                            }
+                        <th className='py-3 px-6 cursor-pointer'>
+                            <p onClick={() => sortingDate()}>
+                                date
+                                {
+                                    orderDate === 'ASC' ?
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
+                                            <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
+                                }
+                            </p>
                         </th>
                         <th className='py-3 px-6'></th>
                     </tr>

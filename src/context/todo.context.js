@@ -8,13 +8,18 @@ const removeList = (todoList, listToRemove) => {
     return todoList.filter((list) => list.date !== listToRemove.date);
 }
 
-const groupListWithPriority = (priorityValue, list) => {
-    // eslint-disable-next-line array-callback-return
-    return list.filter((item) => {
-        if (item.priority === priorityValue) {
-            return item;
+const groupBy = (list, keyGetter) => {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
         }
     });
+    return map;
 }
 
 export const TodoContext = createContext({
@@ -22,13 +27,17 @@ export const TodoContext = createContext({
     setTodoList: () => null,
     addItemtoToDoList: () => { },
     removeTodoFromList: () => { },
-    sortedList: [],
-    groupItemsWithPriority: () => { }
+    groupList: [],
+    setGroupList: () => { },
+    grouped: () => { },
+    groupedHigh: [],
+    groupedAverage: [],
+    groupedLow: []
 });
 
 export const TodoProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
-    const [sortedList, setSortedList] = useState([]);
+    const [groupList, setGroupList] = useState([]);
 
     const addItemtoToDoList = (listToAdd) => {
         setTodoList(addToDoList(todoList, listToAdd));
@@ -38,17 +47,22 @@ export const TodoProvider = ({ children }) => {
         setTodoList(removeList(todoList, listToRemove));
     }
 
-    const groupItemsWithPriority = (priorityValue) => {
-        setSortedList(groupListWithPriority(priorityValue, todoList));
-    }
+    const grouped = () => groupBy(todoList, todo => todo.priority);
+    const groupedHigh = grouped().get('high');
+    const groupedAverage = grouped().get('average');
+    const groupedLow = grouped().get('low');
 
     const value = {
         todoList,
-        addItemtoToDoList,
         setTodoList,
-        groupItemsWithPriority,
-        sortedList,
-        removeTodoFromList
+        addItemtoToDoList,
+        removeTodoFromList,
+        groupList,
+        setGroupList,
+        grouped,
+        groupedHigh,
+        groupedAverage,
+        groupedLow
     };
     return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>
 }

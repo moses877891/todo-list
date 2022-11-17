@@ -31,7 +31,9 @@ const FormModal = () => {
         });
     }
 
-    const addAToDoList = () => addItemtoToDoList(formField);
+    const addAToDoList = () => {
+        addItemtoToDoList(formField);
+    }
 
     const handleSubmit = (event) => {
         addAToDoList();
@@ -41,13 +43,14 @@ const FormModal = () => {
         }
 
     }
+    //console.log(todoList);
 
     return (
         <>
             <div className='overflow-y-auto overflow-x-hidden fixed top-0 
             right-0 left-0 z-50 w-full md:inset-0 md:h-full flex justify-center'
             >
-                <div className="relat p-4 w-full max-w-md h-full md:h-auto">
+                <div className="relative p-4 w-full max-w-md h-full md:h-auto">
                     <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
                             <h3 className="text-3xl font-light text-zinc-600">Add a ToDo</h3>
