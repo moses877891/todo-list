@@ -24,6 +24,7 @@ const firebaseConfig = {
 
 // eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
+
 export const db = getFirestore();
 
 export const addToDoListCollectionAndDocuments = async (listToAdd) => {

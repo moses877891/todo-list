@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import {
     getTodolistDocuments,
@@ -40,9 +40,7 @@ export const TodoProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
     const [groupList, setGroupList] = useState([]);
 
-    // useEffect(() => {
-    //     getToDoList();
-    // }, []);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getToDoList = async () => {
         const List = await getTodolistDocuments();
@@ -50,19 +48,31 @@ export const TodoProvider = ({ children }) => {
         console.log(todoList);
     }
 
+    useEffect(() => {
+        const getList = async () => {
+            console.log('run useEffect');
+            const List = await getTodolistDocuments();
+            setTodoList(List);
+        }
+        getList();
+    }, []);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const addItemtoToDoList = async (listToAdd) => {
         await addToDoListCollectionAndDocuments(listToAdd);
+        getToDoList();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const removeTodoFromList = async (listToRemove) => {
         await deleteTodoListDocument(listToRemove);
+        getToDoList();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updateItemTodoList = async (listToUpdate, updatedList) => {
         await updateTodoListDocument(listToUpdate, updatedList);
+        getToDoList();
     }
 
 
