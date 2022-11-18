@@ -57,24 +57,20 @@ export const TodoProvider = ({ children }) => {
         getList();
     }, []);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const addItemtoToDoList = async (listToAdd) => {
         await addToDoListCollectionAndDocuments(listToAdd);
-        getToDoList();
+        await getToDoList();
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const removeTodoFromList = async (listToRemove) => {
         await deleteTodoListDocument(listToRemove);
         getToDoList();
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const updateItemTodoList = async (listToUpdate, updatedList) => {
         await updateTodoListDocument(listToUpdate, updatedList);
-        getToDoList();
+        await getToDoList();
     }
-
 
 
     const grouped = () => groupBy(todoList, todo => todo.priority);

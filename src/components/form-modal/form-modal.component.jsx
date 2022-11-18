@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 
+import { TodoContext } from "../../context/todo.context";
 import { ShowModalContext } from "../../context/showmodal.context";
 
 import { addToDoListCollectionAndDocuments } from "../../utils/firebase.utils";
@@ -12,6 +13,7 @@ const defaultFormFields = {
 
 const FormModal = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
+    const { addItemtoToDoList } = useContext(TodoContext);
 
     const [formField, setFormField] = useState(defaultFormFields);
     const { toDo, note } = formField;
@@ -30,9 +32,9 @@ const FormModal = () => {
         });
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        await addToDoListCollectionAndDocuments(formField);
+        addItemtoToDoList(formField);
         if (toDo && note) {
             setShowModal(false);
         }

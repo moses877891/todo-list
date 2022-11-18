@@ -9,8 +9,9 @@ import {
     query,
     getDocs,
     deleteDoc,
-    updateDoc
-} from 'firebase/firestore'
+    updateDoc,
+    onSnapshot
+} from 'firebase/firestore';
 
 
 const firebaseConfig = {
@@ -26,6 +27,13 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
+
+export const onSnapshotChange = () => {
+    onSnapshot(collection(db, 'todolist'), (snapshot) => {
+        console.log('snapShot');
+        getTodolistDocuments();
+    })
+}
 
 export const addToDoListCollectionAndDocuments = async (listToAdd) => {
     if (!listToAdd) return;
@@ -53,7 +61,6 @@ export const addToDoListCollectionAndDocuments = async (listToAdd) => {
     } else {
         alert('list already exists');
     }
-    getTodolistDocuments();
     return docRef;
 
 }
@@ -81,12 +88,12 @@ export const deleteTodoListDocument = async (listToDelete) => {
 export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
     if (listToUpdate.toDo !== updatedList.toDo) {
-        addToDoListCollectionAndDocuments(updatedList);
-        deleteTodoListDocument(listToUpdate);
-        getTodolistDocuments();
+        await addToDoListCollectionAndDocuments(updatedList);
+        await deleteTodoListDocument(listToUpdate);
+        await getTodolistDocuments();
         return updatedList;
     }
     await updateDoc(docRef, updatedList);
-    getTodolistDocuments();
+    await getTodolistDocuments();
     return updatedList;
 }
