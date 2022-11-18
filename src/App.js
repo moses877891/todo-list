@@ -5,14 +5,8 @@ import HomePage from './routes/homepage/homepage.component';
 import GroupBy from './routes/groupby/groupby.component';
 
 import './App.scss';
-import { useState } from 'react';
-import { getTodolistDocuments } from './utils/firebase.utils';
 
 const App = () => {
-
-  useState(() => {
-    getTodolistDocuments();
-  }, [])
 
   return (
     <Routes>

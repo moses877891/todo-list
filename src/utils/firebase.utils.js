@@ -9,7 +9,7 @@ import {
     query,
     getDocs,
     deleteDoc,
-    updateDoc,
+    updateDoc
 } from 'firebase/firestore'
 
 
@@ -24,7 +24,6 @@ const firebaseConfig = {
 
 // eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
-
 export const db = getFirestore();
 
 export const addToDoListCollectionAndDocuments = async (listToAdd) => {
@@ -53,6 +52,7 @@ export const addToDoListCollectionAndDocuments = async (listToAdd) => {
     } else {
         alert('list already exists');
     }
+    getTodolistDocuments();
     return docRef;
 
 }
@@ -66,17 +66,26 @@ export const getTodolistDocuments = async () => {
         const docData = docSnapShot.data();
         acc.push(docData)
         return acc;
-    }, [])
+    }, []);
     //console.log(categoryMap);
     return categoryMap;
 }
 
 export const deleteTodoListDocument = async (listToDelete) => {
     const docRef = doc(db, 'todolist', listToDelete.toDo);
-    deleteDoc(docRef);
+    await deleteDoc(docRef);
+    await getTodolistDocuments();
 }
 
 export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
-    updateDoc(docRef, updatedList);
+    if (listToUpdate.toDo !== updatedList.toDo) {
+        addToDoListCollectionAndDocuments(updatedList);
+        deleteTodoListDocument(listToUpdate);
+        getTodolistDocuments();
+        return updatedList;
+    }
+    await updateDoc(docRef, updatedList);
+    getTodolistDocuments();
+    return updatedList;
 }
