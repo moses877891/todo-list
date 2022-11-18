@@ -20,7 +20,6 @@ const UpdateFormModal = () => {
     const [formField, setFormField] = useState(defaultFormFields);
 
     const toggleShowUpdatedModal = () => {
-        console.log('closed');
         setShowUpdatedModal(!showUpdatedModal);
     }
 
