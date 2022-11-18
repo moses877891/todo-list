@@ -22,6 +22,7 @@ const firebaseConfig = {
     appId: "1:234833252531:web:a466730f465db2d1fae0c6"
 };
 
+// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
@@ -76,8 +77,6 @@ export const deleteTodoListDocument = async (listToDelete) => {
 }
 
 export const updateTodoListDocument = async (listToUpdate, updatedList) => {
-    const { toDo, note, priority } = updatedList;
-    const date = new Date().toLocaleString();
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
     updateDoc(docRef, updatedList);
 }
