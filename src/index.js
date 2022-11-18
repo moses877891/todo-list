@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import { BrowserRouter } from 'react-router-dom';
+
 import { ShowModalProvider } from './context/showmodal.context';
 import { TodoProvider } from './context/todo.context';
+import { ShowUpdatedModalProvider } from './context/showUpdatedmodal.context';
 
 import App from './App';
 
@@ -17,7 +18,9 @@ root.render(
     <BrowserRouter>
       <TodoProvider>
         <ShowModalProvider>
-          <App />
+          <ShowUpdatedModalProvider>
+            <App />
+          </ShowUpdatedModalProvider>
         </ShowModalProvider>
       </TodoProvider>
     </BrowserRouter>

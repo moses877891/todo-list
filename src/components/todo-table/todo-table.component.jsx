@@ -5,6 +5,7 @@ import { TodoContext } from "../../context/todo.context";
 import ToDoListComponent from "../todo-list/todo-list.component";
 
 const TodoTable = () => {
+
     const { todoList, setTodoList } = useContext(TodoContext);
     const [orderToDo, setOrderToDO] = useState("ASC");
     const [orderDate, setOrderDate] = useState("ASC");
@@ -83,11 +84,14 @@ const TodoTable = () => {
                             </p>
                         </th>
                         <th className='py-3 px-6'></th>
+                        <th className='py-3 px-6'></th>
                     </tr>
                 </thead>
                 {
+
                     todoList.map((todo) => (
-                        <ToDoListComponent key={todo.date} list={todo} />
+                        //console.log(todo);
+                        <ToDoListComponent key={todo.toDo} list={todo} />
                     ))
                 }
             </table>

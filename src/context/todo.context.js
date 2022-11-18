@@ -1,12 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-const addToDoList = (todoList, listToAdd) => {
-    return [...todoList, { ...listToAdd, date: new Date().toLocaleString() }];
-}
-
-const removeList = (todoList, listToRemove) => {
-    return todoList.filter((list) => list.date !== listToRemove.date);
-}
+import {
+    getTodolistDocuments,
+    addToDoListCollectionAndDocuments,
+    deleteTodoListDocument,
+    updateTodoListDocument
+} from "../utils/firebase.utils";
 
 const groupBy = (list, keyGetter) => {
     const map = new Map();
@@ -23,10 +22,12 @@ const groupBy = (list, keyGetter) => {
 }
 
 export const TodoContext = createContext({
+    getToDoList: () => null,
     todoList: [],
     setTodoList: () => null,
     addItemtoToDoList: () => { },
     removeTodoFromList: () => { },
+    updateItemTodoList: () => { },
     groupList: [],
     setGroupList: () => { },
     grouped: () => { },
@@ -39,13 +40,35 @@ export const TodoProvider = ({ children }) => {
     const [todoList, setTodoList] = useState([]);
     const [groupList, setGroupList] = useState([]);
 
-    const addItemtoToDoList = (listToAdd) => {
-        setTodoList(addToDoList(todoList, listToAdd));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getToDoList = async () => {
+        const List = await getTodolistDocuments();
+        console.log(List);
+        setTodoList(List);
     }
 
-    const removeTodoFromList = (listToRemove) => {
-        setTodoList(removeList(todoList, listToRemove));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const addItemtoToDoList = async (listToAdd) => {
+        await addToDoListCollectionAndDocuments(listToAdd);
+        await getToDoList();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const removeTodoFromList = async (listToRemove) => {
+        await deleteTodoListDocument(listToRemove);
+        await getToDoList();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const updateItemTodoList = async (listToUpdate, updatedList) => {
+        await updateTodoListDocument(listToUpdate, updatedList);
+        await getToDoList();
+    }
+
+    useEffect(() => {
+        getToDoList();
+    }, []);
+
 
     const grouped = () => groupBy(todoList, todo => todo.priority);
     const groupedHigh = grouped().get('high');
@@ -53,10 +76,12 @@ export const TodoProvider = ({ children }) => {
     const groupedLow = grouped().get('low');
 
     const value = {
+        getToDoList,
         todoList,
         setTodoList,
         addItemtoToDoList,
         removeTodoFromList,
+        updateItemTodoList,
         groupList,
         setGroupList,
         grouped,

@@ -1,13 +1,20 @@
 import { useContext } from "react";
 
+import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
 import { TodoContext } from "../../context/todo.context";
+
+import UpdateFormModal from "../update-form-modal/update-form-modal.component";
+
 
 const ToDoListComponent = ({ list }) => {
     const { toDo, note, priority, date } = list;
 
-    const { removeTodoFromList } = useContext(TodoContext);
+    const { removeTodoFromList, } = useContext(TodoContext);
+    const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext)
 
     const removeListHandler = () => removeTodoFromList(list);
+
+    const toggleUpdateModal = () => setShowUpdatedModal(!showUpdatedModal);
 
     return (
         <>
@@ -19,8 +26,11 @@ const ToDoListComponent = ({ list }) => {
                     <td className="py-4 px-6">{date}</td>
                     <td className="py-4 px-0 cursor-pointer"
                         onClick={removeListHandler}>delete</td>
+                    <td className="py-4 px-0 cursor-pointer"
+                        onClick={toggleUpdateModal}>edit</td>
                 </tr>
             </tbody>
+            {showUpdatedModal ? <UpdateFormModal list={list} /> : null}
         </>
     );
 }

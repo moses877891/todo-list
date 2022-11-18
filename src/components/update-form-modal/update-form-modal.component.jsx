@@ -1,23 +1,24 @@
 import { useState, useContext } from "react";
 
-import { ShowModalContext } from "../../context/showmodal.context";
+import { TodoContext } from "../../context/todo.context";
+import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
 
-import { addToDoListCollectionAndDocuments } from "../../utils/firebase.utils";
+const UpdateFormModal = ({ list }) => {
+    const { toDo, note, priority, date } = list
 
-const defaultFormFields = {
-    toDo: '',
-    note: '',
-    priority: 'high'
-}
+    const defaultFormFields = {
+        toDo: toDo,
+        note: note,
+        priority: priority,
+        date: date
+    }
 
-const FormModal = () => {
-    const { showModal, setShowModal } = useContext(ShowModalContext);
-
+    const { updateItemTodoList } = useContext(TodoContext);
+    const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext);
     const [formField, setFormField] = useState(defaultFormFields);
-    const { toDo, note } = formField;
 
-    const toggleShowModal = () => {
-        setShowModal(!showModal);
+    const toggleShowUpdatedModal = () => {
+        setShowUpdatedModal(!showUpdatedModal);
     }
 
     const handleChange = (event) => {
@@ -26,15 +27,15 @@ const FormModal = () => {
         setFormField({
             ...formField,
             [name]: value,
-            //date: new Date().toLocaleString()
         });
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        await addToDoListCollectionAndDocuments(formField);
+        console.log(formField);
+        updateItemTodoList(list, formField);
         if (toDo && note) {
-            setShowModal(false);
+            setShowUpdatedModal(false);
         }
     }
 
@@ -49,7 +50,7 @@ const FormModal = () => {
                             <h3 className="text-3xl font-light text-zinc-600">Add a ToDo</h3>
                             <button
                                 className="bg-transparent border-0 text-black float-right"
-                                onClick={toggleShowModal}
+                                onClick={toggleShowUpdatedModal}
                             >
                                 <span className="text-zinc-600 opacity-7 h-6 w-6 text-xl block py-0 rounded-full">
                                     x
@@ -66,7 +67,7 @@ const FormModal = () => {
                                         focus:border-blue-500 block w-full p-2.5'
                                     type="text"
                                     name='toDo'
-                                    value={toDo}
+                                    defaultValue={toDo}
                                     onChange={handleChange}
                                     required
                                 />
@@ -79,7 +80,7 @@ const FormModal = () => {
                                         focus:border-blue-500 block w-full p-2.5'
                                     type="text"
                                     name='note'
-                                    value={note}
+                                    defaultValue={note}
                                     onChange={handleChange}
                                     required
                                 />
@@ -92,29 +93,19 @@ const FormModal = () => {
                                         focus:border-blue-500 block w-full p-2.5'
                                     name='priority'
                                     onChange={handleChange}
+                                    defaultValue={priority}
                                 >
                                     <option value='high'>High</option>
                                     <option value='average'>Average</option>
                                     <option value='low'>Low</option>
                                 </select>
 
-                                {/*
-                                        <label className='block my-2 text-sm font-medium
-                                        text-gray-900 dark:text-gray-300'>Date</label>
-                                        <input className='bg-gray-50 border 
-                                        border-gray-300 text-gray-900 
-                                        text-sm rounded-lg focus:ring-blue-500 
-                                        focus:border-blue-500 block w-full p-2.5' 
-                                        type="text" value={new Date().toLocaleDateString()} 
-                                        />
-                                        */
-                                }
 
                                 <div className="flex items-center justify-end py-3 border-t border-solid border-blueGray-200 rounded-b">
                                     <button
                                         className="text-slate-900 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1"
                                         type="button"
-                                        onClick={toggleShowModal}
+                                        onClick={toggleShowUpdatedModal}
                                     >
                                         Close
                                     </button>
@@ -123,7 +114,7 @@ const FormModal = () => {
                                         text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1"
                                         type="submit"
                                     >
-                                        Submit
+                                        update
                                     </button>
                                 </div>
                             </form>
@@ -135,4 +126,4 @@ const FormModal = () => {
     )
 }
 
-export default FormModal;
+export default UpdateFormModal;
