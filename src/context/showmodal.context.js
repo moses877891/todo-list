@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
 export const ShowModalContext = createContext({
-    showModal: '',
+    showModal: false,
     setShowModal: () => null
 })
 

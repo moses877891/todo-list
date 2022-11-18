@@ -2,9 +2,11 @@ import { useState, useContext } from "react";
 
 import { TodoContext } from "../../context/todo.context";
 import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
+import { ListToUpdateContext } from "../../context/listToUpdate.context";
 
-const UpdateFormModal = ({ list }) => {
-    const { toDo, note, priority, date } = list
+const UpdateFormModal = () => {
+    const { listToUpdate } = useContext(ListToUpdateContext);
+    const { toDo, note, priority, date } = listToUpdate;
 
     const defaultFormFields = {
         toDo: toDo,
@@ -18,6 +20,7 @@ const UpdateFormModal = ({ list }) => {
     const [formField, setFormField] = useState(defaultFormFields);
 
     const toggleShowUpdatedModal = () => {
+        console.log('closed');
         setShowUpdatedModal(!showUpdatedModal);
     }
 
@@ -32,18 +35,13 @@ const UpdateFormModal = ({ list }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formField);
-        updateItemTodoList(list, formField);
-        if (toDo && note) {
-            setShowUpdatedModal(false);
-        }
+        updateItemTodoList(defaultFormFields, formField);
     }
 
     return (
         <>
             <div className='overflow-y-auto overflow-x-hidden fixed top-0 
-            right-0 left-0 z-50 w-full md:inset-0 md:h-full flex justify-center'
-            >
+                right-0 left-0 z-50 w-full md:inset-0 md:h-full flex justify-center'>
                 <div className="relative p-4 w-full max-w-md h-full md:h-auto">
                     <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">

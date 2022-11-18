@@ -26,7 +26,6 @@ const FormModal = () => {
         setFormField({
             ...formField,
             [name]: value,
-            //date: new Date().toLocaleString()
         });
     }
 

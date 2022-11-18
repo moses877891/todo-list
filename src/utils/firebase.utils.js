@@ -9,8 +9,7 @@ import {
     query,
     getDocs,
     deleteDoc,
-    updateDoc,
-    onSnapshot
+    updateDoc
 } from 'firebase/firestore';
 
 
@@ -28,11 +27,18 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 
-export const onSnapshotChange = () => {
-    onSnapshot(collection(db, 'todolist'), (snapshot) => {
-        console.log('snapShot');
-        getTodolistDocuments();
-    })
+export const getTodolistDocuments = async () => {
+    const collectionRef = collection(db, 'todolist');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapShot) => {
+        const docData = docSnapShot.data();
+        acc.push(docData)
+        return acc;
+    }, []);
+    //console.log(categoryMap);
+    return categoryMap;
 }
 
 export const addToDoListCollectionAndDocuments = async (listToAdd) => {
@@ -65,22 +71,8 @@ export const addToDoListCollectionAndDocuments = async (listToAdd) => {
 
 }
 
-export const getTodolistDocuments = async () => {
-    const collectionRef = collection(db, 'todolist');
-    const q = query(collectionRef);
-
-    const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((acc, docSnapShot) => {
-        const docData = docSnapShot.data();
-        acc.push(docData)
-        return acc;
-    }, []);
-    //console.log(categoryMap);
-    return categoryMap;
-}
-
-export const deleteTodoListDocument = async (listToDelete) => {
-    const docRef = doc(db, 'todolist', listToDelete.toDo);
+export const deleteTodoListDocument = async (listTitle) => {
+    const docRef = doc(db, 'todolist', listTitle);
     await deleteDoc(docRef);
     await getTodolistDocuments();
 }
@@ -89,7 +81,7 @@ export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
     if (listToUpdate.toDo !== updatedList.toDo) {
         await addToDoListCollectionAndDocuments(updatedList);
-        await deleteTodoListDocument(listToUpdate);
+        await deleteTodoListDocument(listToUpdate.toDo);
         await getTodolistDocuments();
         return updatedList;
     }

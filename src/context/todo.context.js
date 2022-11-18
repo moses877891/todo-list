@@ -45,12 +45,10 @@ export const TodoProvider = ({ children }) => {
     const getToDoList = async () => {
         const List = await getTodolistDocuments();
         setTodoList(List);
-        console.log(todoList);
     }
 
     useEffect(() => {
         const getList = async () => {
-            console.log('run useEffect');
             const List = await getTodolistDocuments();
             setTodoList(List);
         }
@@ -62,9 +60,9 @@ export const TodoProvider = ({ children }) => {
         await getToDoList();
     }
 
-    const removeTodoFromList = async (listToRemove) => {
-        await deleteTodoListDocument(listToRemove);
-        getToDoList();
+    const removeTodoFromList = async (listTitle) => {
+        await deleteTodoListDocument(listTitle);
+        await getToDoList();
     }
 
     const updateItemTodoList = async (listToUpdate, updatedList) => {

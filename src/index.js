@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ShowModalProvider } from './context/showmodal.context';
 import { TodoProvider } from './context/todo.context';
 import { ShowUpdatedModalProvider } from './context/showUpdatedmodal.context';
+import { ListToUpdateProvider } from './context/listToUpdate.context';
 
 import App from './App';
 
@@ -19,7 +20,9 @@ root.render(
       <TodoProvider>
         <ShowModalProvider>
           <ShowUpdatedModalProvider>
-            <App />
+            <ListToUpdateProvider>
+              <App />
+            </ListToUpdateProvider>
           </ShowUpdatedModalProvider>
         </ShowModalProvider>
       </TodoProvider>

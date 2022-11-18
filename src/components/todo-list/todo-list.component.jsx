@@ -2,17 +2,23 @@ import { useContext } from "react";
 
 import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
 import { TodoContext } from "../../context/todo.context";
+import { ListToUpdateContext } from "../../context/listToUpdate.context";
 
 import UpdateFormModal from "../update-form-modal/update-form-modal.component";
 
 
 const ToDoListComponent = ({ list }) => {
     const { toDo, note, priority, date } = list;
+    //console.log('list - ', list);
 
     const { removeTodoFromList, } = useContext(TodoContext);
-    const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext)
+    const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext);
 
-    const removeListHandler = () => removeTodoFromList(list);
+    const { setListToUpdate } = useContext(ListToUpdateContext)
+
+    const removeListHandler = () => removeTodoFromList(toDo);
+
+    const updateListHandler = () => setListToUpdate(list);
 
     const toggleUpdateModal = () => setShowUpdatedModal(!showUpdatedModal);
 
@@ -27,10 +33,16 @@ const ToDoListComponent = ({ list }) => {
                     <td className="py-4 px-0 cursor-pointer"
                         onClick={removeListHandler}>delete</td>
                     <td className="py-4 px-0 cursor-pointer"
-                        onClick={toggleUpdateModal}>edit</td>
+                        onClick={() => {
+                            updateListHandler();
+                            toggleUpdateModal();
+                        }}>edit
+                    </td>
                 </tr>
+
             </tbody>
-            {showUpdatedModal ? <UpdateFormModal list={list} /> : null}
+            {showUpdatedModal ? <UpdateFormModal />
+                : null}
         </>
     );
 }

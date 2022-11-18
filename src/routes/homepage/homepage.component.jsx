@@ -6,18 +6,12 @@ import FormModal from '../../components/form-modal/form-modal.component';
 import DropDownButton from '../../components/dropdown-button/dropdown-button.component';
 import TodoTable from '../../components/todo-table/todo-table.component';
 
-import { getTodolistDocuments } from '../../utils/firebase.utils';
-
 import './homepage.styles.scss';
 
 const HomePage = () => {
     const { showModal, setShowModal } = useContext(ShowModalContext);
 
-    getTodolistDocuments();
-
-    const toggleShowModal = () => {
-        setShowModal(!showModal);
-    }
+    const toggleShowModal = () => setShowModal(!showModal);
 
     return (
         <div className='homepage-container'>

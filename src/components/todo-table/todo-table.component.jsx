@@ -10,6 +10,7 @@ const TodoTable = () => {
     const [orderToDo, setOrderToDO] = useState("ASC");
     const [orderDate, setOrderDate] = useState("ASC");
 
+    //sorting according to toDo
     const sortingToDo = () => {
         if (orderToDo === 'ASC') {
             const sorted = [...todoList].sort((a, b) =>
@@ -20,6 +21,7 @@ const TodoTable = () => {
 
             setTodoList(sorted);
             setOrderToDO("DSC");
+            //logToDoList();
         }
         if (orderToDo === 'DSC') {
             const sorted = [...todoList].sort((a, b) =>
@@ -30,9 +32,11 @@ const TodoTable = () => {
 
             setTodoList(sorted);
             setOrderToDO("ASC");
+            //logToDoList();
         }
     }
 
+    // sorting according to date
     const sortingDate = () => {
         if (orderDate === 'ASC') {
             const sorted = [...todoList].sort((a, b) =>
