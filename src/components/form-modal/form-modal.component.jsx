@@ -3,8 +3,6 @@ import { useState, useContext } from "react";
 import { TodoContext } from "../../context/todo.context";
 import { ShowModalContext } from "../../context/showmodal.context";
 
-import { addToDoListCollectionAndDocuments } from "../../utils/firebase.utils";
-
 const defaultFormFields = {
     toDo: '',
     note: '',
