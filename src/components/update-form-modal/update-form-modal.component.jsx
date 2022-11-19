@@ -44,7 +44,7 @@ const UpdateFormModal = () => {
                 <div className="relative p-4 w-full max-w-md h-full md:h-auto">
                     <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
-                            <h3 className="text-3xl font-light text-zinc-600">Add a ToDo</h3>
+                            <h3 className="text-3xl font-light text-zinc-600">Edit</h3>
                             <button
                                 className="bg-transparent border-0 text-black float-right"
                                 onClick={toggleShowUpdatedModal}
@@ -100,7 +100,8 @@ const UpdateFormModal = () => {
 
                                 <div className="flex items-center justify-end py-3 border-t border-solid border-blueGray-200 rounded-b">
                                     <button
-                                        className="text-slate-900 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1"
+                                        className="text-slate-900 background-transparent font-bold uppercase
+                                         px-6 py-2 text-sm outline-none focus:outline-none mr-1"
                                         type="button"
                                         onClick={toggleShowUpdatedModal}
                                     >

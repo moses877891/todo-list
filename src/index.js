@@ -6,6 +6,7 @@ import { ShowModalProvider } from './context/showmodal.context';
 import { TodoProvider } from './context/todo.context';
 import { ShowUpdatedModalProvider } from './context/showUpdatedmodal.context';
 import { ListToUpdateProvider } from './context/listToUpdate.context';
+import { SubTaskModalProvuder } from './context/subTaskmodal.context';
 
 import App from './App';
 
@@ -21,7 +22,9 @@ root.render(
         <ShowModalProvider>
           <ShowUpdatedModalProvider>
             <ListToUpdateProvider>
-              <App />
+              <SubTaskModalProvuder>
+                <App />
+              </SubTaskModalProvuder>
             </ListToUpdateProvider>
           </ShowUpdatedModalProvider>
         </ShowModalProvider>

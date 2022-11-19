@@ -62,16 +62,19 @@ const TodoTable = () => {
 
     return (
         <div>
-            <table className="w-full text-sm text-left text-gray-700 dark:text-gray-400">
-                <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700'>
+            <table className=" w-full text-sm text-left text-gray-700">
+                <thead className='text-xs text-gray-700 uppercase bg-gray-50
+                 dark:bg-gray-700 dark:text-slate-200'>
                     <tr>
                         <th className='py-3 px-6 cursor-pointer'>
                             <p onClick={() => sortingToDo()}>
                                 toDo
                                 {
                                     orderToDo === 'ASC' ?
-                                        (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
-                                            <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                            ASC</span>) : (
+                                            <span className="mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                                DSC</span>)
                                 }
                             </p>
                         </th>
@@ -82,8 +85,10 @@ const TodoTable = () => {
                                 date
                                 {
                                     orderDate === 'ASC' ?
-                                        (<span className=" mx-2 px-1 bg-gray-300 rounded">ASC</span>) : (
-                                            <span className="mx-2 px-1 bg-gray-300 rounded">DSC</span>)
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                            ASC</span>) : (
+                                            <span className="mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                                DSC</span>)
                                 }
                             </p>
                         </th>
@@ -94,7 +99,6 @@ const TodoTable = () => {
                 {
 
                     todoList.map((todo) => (
-                        //console.log(todo);
                         <ToDoListComponent key={todo.toDo} list={todo} />
                     ))
                 }

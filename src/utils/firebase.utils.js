@@ -37,7 +37,7 @@ export const getTodolistDocuments = async () => {
         acc.push(docData)
         return acc;
     }, []);
-    //console.log(categoryMap);
+    //console.log(categoryMap[1]);
     return categoryMap;
 }
 
@@ -88,4 +88,19 @@ export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     await updateDoc(docRef, updatedList);
     await getTodolistDocuments();
     return updatedList;
+}
+
+export const AddSubTaskToList = async (listToUpdate, subTasks) => {
+    const docRef = doc(db, 'todolist', listToUpdate.toDo);
+    const subtask = subTasks.toDo;
+    if (!listToUpdate.subTasks) {
+        listToUpdate.subTasks = [];
+        listToUpdate.subTasks.push(subtask);
+        await updateDoc(docRef, listToUpdate);
+        await getTodolistDocuments();
+        return docRef;
+    }
+    listToUpdate.subTasks.push(subtask);
+    await updateDoc(docRef, listToUpdate);
+    console.log(listToUpdate);
 }

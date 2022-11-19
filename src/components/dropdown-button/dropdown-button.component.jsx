@@ -29,8 +29,9 @@ const DropDownButton = () => {
     return (
         <div>
             <div className="dropdown float-right">
-                <button onClick={toggleDropDown} className="block bg-zinc-600 hover:bg-zinc-800
-                text-neutral-50 px-2 py-2 rounded-lg font-semibold my-4">
+                <button onClick={toggleDropDown} className="block bg-slate-300 hover:bg-slate-400
+                text-slate-700 px-2 py-2 rounded-lg font-semibold my-4
+                 dark:bg-gray-600 dark:text-neutral-100 dark:hover:bg-gray-700">
                     Group by priority 🡣
                 </button>
                 {showDropDown ? (

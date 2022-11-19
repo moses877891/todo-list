@@ -18,9 +18,9 @@ const HomePage = () => {
             <DropDownButton />
             <TodoTable />
             <button
-                className=' text-xl text-white bg-slate-300 
-                    rounded-lg hover:bg-slate-400 px-3 hover:shadow-md
-                    my-6 py-1 w-full'
+                className=' text-xl text-neutral-700 hover:text-neutral-200 bg-slate-300
+                rounded-lg hover:bg-slate-500 px-3 hover:shadow-md my-6 py-1 w-full 
+                dark:bg-gray-700 dark:text-neutral-200 dark:hover:bg-gray-800'
                 type='button'
                 onClick={toggleShowModal}
             >
