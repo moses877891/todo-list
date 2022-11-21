@@ -1,18 +1,19 @@
 import { useState, useContext } from "react";
 
 import { SubTaskModalContext } from "../../context/subTaskmodal.context";
-import { AddSubTaskToList } from '../../utils/firebase.utils';
+import { SubTaskContext } from "../../context/subtask.context";
 import { ListToUpdateContext } from "../../context/listToUpdate.context";
 
 
 const defaultFormField = {
-    toDo: ''
+    toDo: '',
 }
 
 const AddSubTask = () => {
     const [formField, setFormField] = useState(defaultFormField);
     const { toDo } = formField;
 
+    const { setSubtask, addItemtoToDoSubTask, getSubTask } = useContext(SubTaskContext);
     const { showSubTaskModal, setShowSubTaskModal } = useContext(SubTaskModalContext);
     const { listToUpdate } = useContext(ListToUpdateContext);
 
@@ -23,10 +24,13 @@ const AddSubTask = () => {
         });
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        AddSubTaskToList(listToUpdate, formField);
+        setSubtask(formField);
+        addItemtoToDoSubTask(listToUpdate, formField);
+        getSubTask();
     }
+    //console.log(subtask);
 
     const toggleShowSubTaskModal = () => setShowSubTaskModal(!showSubTaskModal);
 

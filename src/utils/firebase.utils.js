@@ -27,6 +27,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 
+//get the main task
 export const getTodolistDocuments = async () => {
     const collectionRef = collection(db, 'todolist');
     const q = query(collectionRef);
@@ -41,6 +42,7 @@ export const getTodolistDocuments = async () => {
     return categoryMap;
 }
 
+//creation of main task
 export const addToDoListCollectionAndDocuments = async (listToAdd) => {
     if (!listToAdd) return;
 
@@ -71,12 +73,14 @@ export const addToDoListCollectionAndDocuments = async (listToAdd) => {
 
 }
 
+//deletion of main task
 export const deleteTodoListDocument = async (listTitle) => {
     const docRef = doc(db, 'todolist', listTitle);
     await deleteDoc(docRef);
     await getTodolistDocuments();
 }
 
+//updation of main task
 export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
     if (listToUpdate.toDo !== updatedList.toDo) {
@@ -90,17 +94,97 @@ export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     return updatedList;
 }
 
-export const AddSubTaskToList = async (listToUpdate, subTasks) => {
-    const docRef = doc(db, 'todolist', listToUpdate.toDo);
-    const subtask = subTasks.toDo;
-    if (!listToUpdate.subTasks) {
-        listToUpdate.subTasks = [];
-        listToUpdate.subTasks.push(subtask);
-        await updateDoc(docRef, listToUpdate);
-        await getTodolistDocuments();
-        return docRef;
+const groupBy = (list, keyGetter) => {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
+        }
+    });
+    return map;
+}
+
+//get all subtask
+export const getSubtaskDocuments = async () => {
+    const collectionRef = collection(db, 'subtask');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapShot) => {
+        const docData = docSnapShot.data();
+        acc.push(docData);
+        return acc;
+    }, []);
+    const groupedSubTask = groupBy(categoryMap, todo => todo.key);
+    console.log(groupedSubTask);
+    return groupedSubTask;
+}
+
+//create subtask
+export const AddSubTaskToList = async (mainTask, subtask) => {
+    const docRef = doc(db, 'subtask', subtask.toDo);
+    const docSnapshot = await getDoc(docRef);
+    console.log(docSnapshot.exists());
+    const key = mainTask.toDo;
+
+    if (!docSnapshot.exists()) {
+        const { toDo } = subtask;
+
+        const date = new Date().toLocaleString();
+
+        try {
+            await setDoc(docRef, {
+                key,
+                toDo,
+                date
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    } else {
+        alert('subtask already exists');
     }
-    listToUpdate.subTasks.push(subtask);
-    await updateDoc(docRef, listToUpdate);
-    console.log(listToUpdate);
+    await getSubtaskDocuments();
+    return docRef;
+}
+
+//delete subtask
+export const deleteSubDocument = async (listTitle) => {
+    const docRef = doc(db, 'subtask', listTitle);
+    await deleteDoc(docRef);
+    await getSubtaskDocuments();
+    await getTodolistDocuments();
+}
+
+//update subtask
+export const updateSubtaskDocument = async (listToUpdate, updatedList) => {
+    const docRef = doc(db, 'subtask', updatedList.toDo);
+    const docSnapshot = await getDoc(docRef);
+    console.log(docSnapshot.exists());
+    const key = listToUpdate.key;
+
+    if (!docSnapshot.exists()) {
+        const { toDo } = updatedList;
+
+        const date = new Date().toLocaleString();
+
+        try {
+            await setDoc(docRef, {
+                key,
+                toDo,
+                date
+            });
+            await deleteSubDocument(listToUpdate.toDo)
+        } catch (error) {
+            console.log(error.message);
+        }
+    } else {
+        alert('subtask already exists');
+    }
+    await getSubtaskDocuments();
+    return updatedList;
 }

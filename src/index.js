@@ -7,6 +7,7 @@ import { TodoProvider } from './context/todo.context';
 import { ShowUpdatedModalProvider } from './context/showUpdatedmodal.context';
 import { ListToUpdateProvider } from './context/listToUpdate.context';
 import { SubTaskModalProvuder } from './context/subTaskmodal.context';
+import { SubTaskProvider } from './context/subtask.context';
 
 import App from './App';
 
@@ -19,15 +20,17 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <TodoProvider>
-        <ShowModalProvider>
-          <ShowUpdatedModalProvider>
-            <ListToUpdateProvider>
-              <SubTaskModalProvuder>
-                <App />
-              </SubTaskModalProvuder>
-            </ListToUpdateProvider>
-          </ShowUpdatedModalProvider>
-        </ShowModalProvider>
+        <SubTaskProvider>
+          <ShowModalProvider>
+            <ShowUpdatedModalProvider>
+              <ListToUpdateProvider>
+                <SubTaskModalProvuder>
+                  <App />
+                </SubTaskModalProvuder>
+              </ListToUpdateProvider>
+            </ShowUpdatedModalProvider>
+          </ShowModalProvider>
+        </SubTaskProvider>
       </TodoProvider>
     </BrowserRouter>
   </React.StrictMode>
