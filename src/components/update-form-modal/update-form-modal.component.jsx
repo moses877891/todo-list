@@ -3,6 +3,9 @@ import { useState, useContext } from "react";
 import { TodoContext } from "../../context/todo.context";
 import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
 import { ListToUpdateContext } from "../../context/listToUpdate.context";
+import { SubTaskContext } from "../../context/subtask.context";
+
+import { updateSubTaskListWithMainTask } from '../../utils/firebase.utils';
 
 const UpdateFormModal = () => {
     const { listToUpdate } = useContext(ListToUpdateContext);
@@ -15,6 +18,7 @@ const UpdateFormModal = () => {
         date: date
     }
 
+    const { subtask } = useContext(SubTaskContext)
     const { updateItemTodoList } = useContext(TodoContext);
     const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext);
     const [formField, setFormField] = useState(defaultFormFields);
@@ -32,9 +36,11 @@ const UpdateFormModal = () => {
         });
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         updateItemTodoList(defaultFormFields, formField);
+        updateSubTaskListWithMainTask(defaultFormFields, formField, subtask);
+        setShowUpdatedModal(!showUpdatedModal);
     }
 
     return (

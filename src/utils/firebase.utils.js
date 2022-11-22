@@ -83,6 +83,9 @@ export const deleteTodoListDocument = async (listTitle) => {
 //updation of main task
 export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     const docRef = doc(db, 'todolist', listToUpdate.toDo);
+    console.log(updatedList);
+    //console.log(subtaskList);
+
     if (listToUpdate.toDo !== updatedList.toDo) {
         await addToDoListCollectionAndDocuments(updatedList);
         await deleteTodoListDocument(listToUpdate.toDo);
@@ -94,7 +97,7 @@ export const updateTodoListDocument = async (listToUpdate, updatedList) => {
     return updatedList;
 }
 
-const groupBy = (list, keyGetter) => {
+export const groupBy = (list, keyGetter) => {
     const map = new Map();
     list.forEach((item) => {
         const key = keyGetter(item);
@@ -119,26 +122,26 @@ export const getSubtaskDocuments = async () => {
         acc.push(docData);
         return acc;
     }, []);
-    const groupedSubTask = groupBy(categoryMap, todo => todo.key);
-    console.log(groupedSubTask);
-    return groupedSubTask;
+    //const groupedSubTask = groupBy(categoryMap, todo => todo.linkWith);
+    //console.log(categoryMap);
+    return categoryMap;
 }
 
 //create subtask
-export const AddSubTaskToList = async (mainTask, subtask) => {
+export const AddSubTaskToList = async (subtask) => {
     const docRef = doc(db, 'subtask', subtask.toDo);
     const docSnapshot = await getDoc(docRef);
     console.log(docSnapshot.exists());
-    const key = mainTask.toDo;
 
     if (!docSnapshot.exists()) {
-        const { toDo } = subtask;
+        const { toDo, note, linkWith } = subtask;
 
         const date = new Date().toLocaleString();
 
         try {
             await setDoc(docRef, {
-                key,
+                note,
+                linkWith,
                 toDo,
                 date
             });
@@ -162,29 +165,39 @@ export const deleteSubDocument = async (listTitle) => {
 
 //update subtask
 export const updateSubtaskDocument = async (listToUpdate, updatedList) => {
-    const docRef = doc(db, 'subtask', updatedList.toDo);
-    const docSnapshot = await getDoc(docRef);
-    console.log(docSnapshot.exists());
-    const key = listToUpdate.key;
-
-    if (!docSnapshot.exists()) {
-        const { toDo } = updatedList;
-
-        const date = new Date().toLocaleString();
-
-        try {
-            await setDoc(docRef, {
-                key,
-                toDo,
-                date
-            });
-            await deleteSubDocument(listToUpdate.toDo)
-        } catch (error) {
-            console.log(error.message);
-        }
-    } else {
-        alert('subtask already exists');
+    const docRef = doc(db, 'subtask', listToUpdate.toDo);
+    if (listToUpdate.toDo !== updatedList.toDo) {
+        await AddSubTaskToList(updatedList);
+        await deleteSubDocument(listToUpdate.toDo);
+        await getSubtaskDocuments();
+        return docRef;
     }
+    await updateDoc(docRef, updatedList);
     await getSubtaskDocuments();
-    return updatedList;
+    return docRef;
+}
+
+export const updateSubTaskListWithMainTask = (listToUpdate, updatedList, subtaskList) => {
+    if (listToUpdate.toDo !== updatedList.toDo) {
+        subtaskList.forEach(async (subtask) => {
+            if (listToUpdate.toDo === subtask.linkWith) {
+                const subTaskDocRef = doc(db, 'subtask', subtask.toDo);
+                const updatedSubTask = { ...subtask, linkWith: updatedList.toDo }
+                console.log('updatedSub', updatedSubTask);
+                await updateDoc(subTaskDocRef, updatedSubTask);
+                await getSubtaskDocuments();
+                return subTaskDocRef;
+            }
+        })
+    }
+}
+
+export const deleteSubTaskListWithMainTask = async (listTitle, subtaskList) => {
+    subtaskList.forEach(async (subtask) => {
+        if (listTitle === subtask.linkWith) {
+            const subTaskDocRef = doc(db, 'subtask', subtask.toDo);
+            await deleteSubDocument(subtask.toDo);
+            return subTaskDocRef;
+        }
+    })
 }

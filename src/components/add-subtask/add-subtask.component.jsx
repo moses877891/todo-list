@@ -2,24 +2,38 @@ import { useState, useContext } from "react";
 
 import { SubTaskModalContext } from "../../context/subTaskmodal.context";
 import { SubTaskContext } from "../../context/subtask.context";
-import { ListToUpdateContext } from "../../context/listToUpdate.context";
+import { TodoContext } from "../../context/todo.context";
 
 
 const defaultFormField = {
     toDo: '',
+    note: '',
+    linkWith: ''
 }
 
 const AddSubTask = () => {
     const [formField, setFormField] = useState(defaultFormField);
-    const { toDo } = formField;
+    const { toDo, note } = formField;
 
+    const none = '';
+
+    const { todoList } = useContext(TodoContext);
     const { setSubtask, addItemtoToDoSubTask, getSubTask } = useContext(SubTaskContext);
     const { showSubTaskModal, setShowSubTaskModal } = useContext(SubTaskModalContext);
-    const { listToUpdate } = useContext(ListToUpdateContext);
+
+    const createSelectItems = () => {
+        const items = todoList.reduce((acc, list) => {
+            acc.push(<option key={list.toDo} value={list.toDo}>{list.toDo}</option>);
+            return acc;
+        }, [])
+        return items;
+    }
 
     const handleChange = (event) => {
         const { value, name } = event.target;
+        console.log(formField);
         setFormField({
+            ...formField,
             [name]: value
         });
     }
@@ -27,7 +41,8 @@ const AddSubTask = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setSubtask(formField);
-        addItemtoToDoSubTask(listToUpdate, formField);
+        console.log(formField);
+        addItemtoToDoSubTask(formField);
         getSubTask();
     }
     //console.log(subtask);
@@ -55,7 +70,35 @@ const AddSubTask = () => {
                                 name='toDo'
                                 value={toDo}
                                 onChange={handleChange}
+                                required
                             />
+                            <label className='block my-2 text-sm font-medium
+                            text-zinc-600 dark:text-gray-300'>note</label>
+                            <input
+                                className="bg-gray-50 border 
+                            border-gray-300 text-gray-900 
+                            text-sm rounded-lg focus:ring-blue-500 
+                            focus:border-blue-500 block w-full p-1"
+                                type="text"
+                                name='note'
+                                value={note}
+                                onChange={handleChange}
+                                required
+                            />
+                            <label className='block my-2 text-sm font-medium
+                            text-zinc-600 dark:text-gray-300'>link with</label>
+                            <select
+                                className="bg-gray-50 border 
+                            border-gray-300 text-gray-900 
+                            text-sm rounded-lg focus:ring-blue-500 
+                            focus:border-blue-500 block w-full p-1"
+                                defaultValue={none}
+                                name='linkWith'
+                                onChange={handleChange}
+                            >
+                                <option value="" name={none} ></option>
+                                {createSelectItems()}
+                            </select>
                             <div className="flex items-center justify-end pt-3 border-t 
                                 border-solid border-blueGray-200 rounded-b">
                                 <button

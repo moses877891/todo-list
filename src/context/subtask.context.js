@@ -8,7 +8,7 @@ import {
 } from '../utils/firebase.utils';
 
 export const SubTaskContext = createContext({
-    subtask: new Map(),
+    subtask: [],
     setSubtask: () => { },
     subtaskToUpdate: '',
     setSubtaskToUpdate: () => { },
@@ -21,7 +21,7 @@ export const SubTaskContext = createContext({
 });
 
 export const SubTaskProvider = ({ children }) => {
-    const [subtask, setSubtask] = useState(new Map());
+    const [subtask, setSubtask] = useState([]);
     const [subtaskToUpdate, setSubtaskToUpdate] = useState([]);
     const [showSubTask, setShowSubTask] = useState(false);
 
@@ -35,8 +35,8 @@ export const SubTaskProvider = ({ children }) => {
         getSubTask();
     }, []);
 
-    const addItemtoToDoSubTask = async (mainTask, listToAdd) => {
-        await AddSubTaskToList(mainTask, listToAdd);
+    const addItemtoToDoSubTask = async (listToAdd) => {
+        await AddSubTaskToList(listToAdd);
         await getSubTask();
     }
 
@@ -47,7 +47,7 @@ export const SubTaskProvider = ({ children }) => {
 
     const updateItemSubTask = async (listToUpdate, updatedList) => {
         await updateSubtaskDocument(listToUpdate, updatedList);
-        //await getSubTask();
+        await getSubTask();
     }
 
     const value = {
