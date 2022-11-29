@@ -8,39 +8,47 @@ import UpdateSubTaskFormModal from "../sub-task-form-modal/subtask-form-modal.co
 const SubtaskComponent = ({ subtask }) => {
     const {
         setSubtaskToUpdate,
-        showSubTask,
-        setShowSubTask,
-        removeTodoFromSubTask
+        removeTodoFromSubTask,
+        showEditSubTaskModal,
+        setShowEditSubTaskModal
     } = useContext(SubTaskContext);
 
     const removeSubtaskHandler = () => removeTodoFromSubTask(subtask.toDo);
 
     const setSubtaskList = () => setSubtaskToUpdate(subtask);
 
-    const toggleShowSubTask = () => setShowSubTask(!showSubTask);
+    const toggleShowSubTask = () => setShowEditSubTaskModal(!showEditSubTaskModal);
 
     return (
         <>
             <tbody>
-                <tr key={subtask.toDo} className="bg-gray-100 border-b dark:bg-slate-100 text-slate-700
-                dark:text-slate-900">
-                    <td className="py-4 px-6 font-normal">
+                <tr key={subtask.toDo} className=" bg-neutral-100 border-b text-slate-800
+                    border-t border-t-slate-100 text-sm">
+                    <td className="py-4 px-6 border-b-2 border-b-stone-100">
                         {subtask.toDo}
                     </td>
-                    <td className="py-4 px-6 font-normal">{subtask.note}</td>
-                    <td className="py-4 px-6 font-normal">{subtask.linkWith}</td>
-                    <td className="py-4 px-6 font-normal">
+                    <td className="py-4 px-6 border-b-2 border-b-stone-100">{subtask.note}</td>
+                    {/*<td className="py-4 px-6 ">{subtask.linkWith}</td>*/}
+                    <td className="py-4 px-6 border-b-2 border-b-stone-100">
                         {subtask.date}
                     </td>
-                    <td onClick={removeSubtaskHandler} className="cursor-pointer">delete</td>
-                    <td onClick={() => {
-                        setSubtaskList();
-                        toggleShowSubTask();
-                    }} className="cursor-pointer">edit</td>
+                    <td className="py-4 px-6 border-b-2 border-b-stone-100">
+                        <span className="cursor-pointer" onClick={() => {
+                            setSubtaskList();
+                            toggleShowSubTask();
+                        }}>
+                            edit
+                        </span>
+                    </td>
+                    <td className=" border-b-2 border-b-stone-100">
+                        <span className="cursor-pointer" onClick={removeSubtaskHandler}>
+                            delete
+                        </span>
+                    </td>
                 </tr>
             </tbody>
             {
-                showSubTask ? (<UpdateSubTaskFormModal />) : null
+                showEditSubTaskModal ? (<UpdateSubTaskFormModal />) : null
             }
         </>
     )

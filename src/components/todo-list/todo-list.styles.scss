@@ -1,0 +1,25 @@
+
+.animateDownArrow {
+    transform: scale(0.9);
+    transition: transform 0.3s ease-out;
+}
+
+.fade {
+    animation: fade-in-keyframes 0.4s;
+
+    @keyframes fade-in-keyframes {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+}
+
+.trans {
+    transform: translateZ(0);
+    transition: transform 0.3s ease-out;
+
+    &:hover {
+    transform: scale(1.04);
+    cursor: pointer;
+    }
+}
+  

@@ -131,7 +131,7 @@ export const getSubtaskDocuments = async () => {
 export const AddSubTaskToList = async (subtask) => {
     const docRef = doc(db, 'subtask', subtask.toDo);
     const docSnapshot = await getDoc(docRef);
-    console.log(docSnapshot.exists());
+    // console.log(docSnapshot.exists());
 
     if (!docSnapshot.exists()) {
         const { toDo, note, linkWith } = subtask;

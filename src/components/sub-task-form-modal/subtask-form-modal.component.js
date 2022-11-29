@@ -17,10 +17,11 @@ const UpdateSubTaskFormModal = () => {
 
     const {
         subtaskToUpdate,
-        showSubTask,
-        setShowSubTask,
+        showEditSubTaskModal,
+        setShowEditSubTaskModal,
         updateItemSubTask,
     } = useContext(SubTaskContext);
+
     const { toDo, date, linkWith, note } = subtaskToUpdate;
 
     const defaultFormFields = {
@@ -32,7 +33,7 @@ const UpdateSubTaskFormModal = () => {
 
     const [formField, setFormField] = useState(defaultFormFields);
 
-    const toggleShowSubTaskUpdatedModal = () => setShowSubTask(!showSubTask);
+    const toggleShowSubTaskUpdatedModal = () => setShowEditSubTaskModal(!showEditSubTaskModal);
 
     const handleChange = (event) => {
         const { value, name } = event.target;
@@ -55,12 +56,13 @@ const UpdateSubTaskFormModal = () => {
                 <div className="relative p-4 w-full max-w-md h-full md:h-auto">
                     <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
-                            <h3 className="text-3xl font-light text-zinc-600">Edit</h3>
+                            <h3 className="text-3xl font-light text-zinc-800">Edit</h3>
                             <button
                                 className="bg-transparent border-0 text-black float-right"
                                 onClick={toggleShowSubTaskUpdatedModal}
                             >
-                                <span className="text-zinc-600 opacity-7 h-6 w-6 text-xl block py-0 rounded-full">
+                                <span className="text-zinc-800 opacity-7 h-6 w-6 text-xl block py-0 rounded-full
+                                active:animate-ping">
                                     x
                                 </span>
                             </button>
@@ -68,7 +70,7 @@ const UpdateSubTaskFormModal = () => {
                         <div className='py-6 px-6 lg:px-8'>
                             <form className='flex flex-col' onSubmit={handleSubmit}>
                                 <label className='block my-2 text-sm font-medium
-                                        text-zinc-600 dark:text-gray-300'>ToDo</label>
+                                text-neutral-800 dark:text-gray-300'>Subtask</label>
                                 <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
@@ -81,7 +83,7 @@ const UpdateSubTaskFormModal = () => {
                                 />
 
                                 <label className='block my-2 text-sm font-medium
-                                text-zinc-600 dark:text-gray-300'>note</label>
+                                text-neutral-800 dark:text-gray-300'>note</label>
                                 <input
                                     className="bg-gray-50 border 
                                 border-gray-300 text-gray-900 
@@ -95,7 +97,7 @@ const UpdateSubTaskFormModal = () => {
                                 />
 
                                 <label className='block my-2 text-sm font-medium
-                                text-zinc-600 dark:text-gray-300'>link with</label>
+                                text-neutral-800text-zinc-600 dark:text-gray-300'>link with</label>
                                 <select
                                     className="bg-gray-50 border 
                                 border-gray-300 text-gray-900 
@@ -110,15 +112,15 @@ const UpdateSubTaskFormModal = () => {
 
                                 <div className="flex items-center justify-end py-3 border-t border-solid border-blueGray-200 rounded-b">
                                     <button
-                                        className="text-slate-900 background-transparent font-bold uppercase
+                                        className="text-neutral-900 background-transparent font-bold uppercase
                                          px-6 py-2 text-sm outline-none focus:outline-none mr-1"
                                         type="button"
-                                        onClick={toggleShowSubTaskUpdatedModal}
+                                        onClick={() => toggleShowSubTaskUpdatedModal()}
                                     >
                                         Close
                                     </button>
                                     <button
-                                        className="text-white bg-slate-700 active:bg-slate-800 font-bold uppercase 
+                                        className="text-white bg-neutral-900 active:bg-neutral-800 font-bold uppercase 
                                         text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1"
                                         type="submit"
                                     >

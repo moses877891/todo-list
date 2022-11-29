@@ -12,8 +12,10 @@ export const SubTaskContext = createContext({
     setSubtask: () => { },
     subtaskToUpdate: '',
     setSubtaskToUpdate: () => { },
-    showSubTask: false,
-    setShowSubTask: () => null,
+    showAddSubTaskModal: false,
+    setShowAddSubTaskModal: () => null,
+    showEditSubTaskModal: false,
+    setShowEditSubTaskModal: () => null,
     addItemtoToDoSubTask: () => { },
     removeTodoFromSubTask: () => { },
     updateItemSubTask: () => { },
@@ -21,11 +23,19 @@ export const SubTaskContext = createContext({
 });
 
 export const SubTaskProvider = ({ children }) => {
+    //SubTask
     const [subtask, setSubtask] = useState([]);
+
+    //subTask To Update
     const [subtaskToUpdate, setSubtaskToUpdate] = useState([]);
-    const [showSubTask, setShowSubTask] = useState(false);
 
+    //add subtask modal
+    const [showAddSubTaskModal, setShowAddSubTaskModal] = useState(false);
 
+    //edit subtask modal
+    const [showEditSubTaskModal, setShowEditSubTaskModal] = useState(false);
+
+    //get subtask
     const getSubTask = async () => {
         const subList = await getSubtaskDocuments();
         setSubtask(subList);
@@ -35,16 +45,19 @@ export const SubTaskProvider = ({ children }) => {
         getSubTask();
     }, []);
 
+    //add item to subtask 
     const addItemtoToDoSubTask = async (listToAdd) => {
         await AddSubTaskToList(listToAdd);
         await getSubTask();
     }
 
+    // remove item from subtask
     const removeTodoFromSubTask = async (subTaskTitle) => {
         await deleteSubDocument(subTaskTitle);
         await getSubTask();
     }
 
+    //edit an item in subtask
     const updateItemSubTask = async (listToUpdate, updatedList) => {
         await updateSubtaskDocument(listToUpdate, updatedList);
         await getSubTask();
@@ -55,8 +68,10 @@ export const SubTaskProvider = ({ children }) => {
         setSubtask,
         subtaskToUpdate,
         setSubtaskToUpdate,
-        showSubTask,
-        setShowSubTask,
+        showAddSubTaskModal,
+        setShowAddSubTaskModal,
+        showEditSubTaskModal,
+        setShowEditSubTaskModal,
         addItemtoToDoSubTask,
         removeTodoFromSubTask,
         updateItemSubTask,

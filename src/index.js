@@ -2,12 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import { ShowModalProvider } from './context/showmodal.context';
 import { TodoProvider } from './context/todo.context';
-import { ShowUpdatedModalProvider } from './context/showUpdatedmodal.context';
-import { ListToUpdateProvider } from './context/listToUpdate.context';
-import { SubTaskModalProvuder } from './context/subTaskmodal.context';
 import { SubTaskProvider } from './context/subtask.context';
+import { ViewTodoProvider } from './context/viewTodo.context';
 
 import App from './App';
 
@@ -19,15 +16,9 @@ root.render(
     <BrowserRouter>
       <TodoProvider>
         <SubTaskProvider>
-          <ShowModalProvider>
-            <ShowUpdatedModalProvider>
-              <ListToUpdateProvider>
-                <SubTaskModalProvuder>
-                  <App />
-                </SubTaskModalProvuder>
-              </ListToUpdateProvider>
-            </ShowUpdatedModalProvider>
-          </ShowModalProvider>
+          <ViewTodoProvider>
+            <App />
+          </ViewTodoProvider>
         </SubTaskProvider>
       </TodoProvider>
     </BrowserRouter>

@@ -1,14 +1,12 @@
 import { useState, useContext } from "react";
 
 import { TodoContext } from "../../context/todo.context";
-import { ShowUpdatedModalContext } from "../../context/showUpdatedmodal.context";
-import { ListToUpdateContext } from "../../context/listToUpdate.context";
 import { SubTaskContext } from "../../context/subtask.context";
 
 import { updateSubTaskListWithMainTask } from '../../utils/firebase.utils';
 
 const UpdateFormModal = () => {
-    const { listToUpdate } = useContext(ListToUpdateContext);
+    const { updateItemTodoList, showEditTodoModal, setShowEditTodoModal, listToUpdate } = useContext(TodoContext);
     const { toDo, note, priority, date } = listToUpdate;
 
     const defaultFormFields = {
@@ -19,12 +17,10 @@ const UpdateFormModal = () => {
     }
 
     const { subtask } = useContext(SubTaskContext)
-    const { updateItemTodoList } = useContext(TodoContext);
-    const { showUpdatedModal, setShowUpdatedModal } = useContext(ShowUpdatedModalContext);
     const [formField, setFormField] = useState(defaultFormFields);
 
     const toggleShowUpdatedModal = () => {
-        setShowUpdatedModal(!showUpdatedModal);
+        setShowEditTodoModal(!showEditTodoModal);
     }
 
     const handleChange = (event) => {
@@ -40,7 +36,7 @@ const UpdateFormModal = () => {
         event.preventDefault();
         updateItemTodoList(defaultFormFields, formField);
         updateSubTaskListWithMainTask(defaultFormFields, formField, subtask);
-        setShowUpdatedModal(!showUpdatedModal);
+        toggleShowUpdatedModal();
     }
 
     return (
@@ -50,12 +46,13 @@ const UpdateFormModal = () => {
                 <div className="relative p-4 w-full max-w-md h-full md:h-auto">
                     <div className="relative bg-stone-300 rounded-lg">
                         <div className="flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
-                            <h3 className="text-3xl font-light text-zinc-600">Edit</h3>
+                            <h3 className="text-3xl font-light text-zinc-800">Edit</h3>
                             <button
                                 className="bg-transparent border-0 text-black float-right"
                                 onClick={toggleShowUpdatedModal}
                             >
-                                <span className="text-zinc-600 opacity-7 h-6 w-6 text-xl block py-0 rounded-full">
+                                <span className="text-neutral-800 opacity-7 h-6 w-6 text-xl block py-0 rounded-full
+                                active:animate-ping">
                                     x
                                 </span>
                             </button>
@@ -63,7 +60,7 @@ const UpdateFormModal = () => {
                         <div className='py-6 px-6 lg:px-8'>
                             <form className='flex flex-col' onSubmit={handleSubmit}>
                                 <label className='block my-2 text-sm font-medium
-                                        text-zinc-600 dark:text-gray-300'>ToDo</label>
+                                text-neutral-800 dark:text-gray-300'>ToDo</label>
                                 <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
@@ -76,7 +73,7 @@ const UpdateFormModal = () => {
                                 />
 
                                 <label className='block my-2 text-sm font-medium
-                                        text-zinc-600'>Note</label>
+                                text-neutral-800'>Note</label>
                                 <input className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
@@ -89,7 +86,7 @@ const UpdateFormModal = () => {
                                 />
 
                                 <label className='block my-2 text-sm font-medium
-                                        text-zinc-600 dark:text-gray-300'>Priority</label>
+                                text-neutral-800 dark:text-gray-300'>Priority</label>
                                 <select className='bg-gray-50 border 
                                         border-gray-300 text-gray-900 
                                         text-sm rounded-lg focus:ring-blue-500 
@@ -106,7 +103,7 @@ const UpdateFormModal = () => {
 
                                 <div className="flex items-center justify-end py-3 border-t border-solid border-blueGray-200 rounded-b">
                                     <button
-                                        className="text-slate-900 background-transparent font-bold uppercase
+                                        className="text-neutral-900 background-transparent font-bold uppercase
                                          px-6 py-2 text-sm outline-none focus:outline-none mr-1"
                                         type="button"
                                         onClick={toggleShowUpdatedModal}
@@ -114,7 +111,7 @@ const UpdateFormModal = () => {
                                         Close
                                     </button>
                                     <button
-                                        className="text-white bg-slate-700 active:bg-slate-800 font-bold uppercase 
+                                        className="text-white bg-neutral-900 active:bg-neutral-800 font-bold uppercase 
                                         text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1"
                                         type="submit"
                                     >

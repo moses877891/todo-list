@@ -6,31 +6,32 @@ import ToDoListComponent from "../todo-list/todo-list.component";
 
 const TodoTable = () => {
 
-    const { todoList, setTodoList } = useContext(TodoContext);
+    const { dummyConst, setDummyConst } = useContext(TodoContext);
+
     const [orderToDo, setOrderToDO] = useState("ASC");
     const [orderDate, setOrderDate] = useState("ASC");
 
     //sorting according to toDo
     const sortingToDo = () => {
         if (orderToDo === 'ASC') {
-            const sorted = [...todoList].sort((a, b) =>
+            const sorted = [...dummyConst].sort((a, b) =>
 
                 a.toDo.toString().toLowerCase() < b.toDo.toString().toLowerCase() ? 1 : -1
 
             );
 
-            setTodoList(sorted);
+            setDummyConst(sorted);
             setOrderToDO("DSC");
             //logToDoList();
         }
         if (orderToDo === 'DSC') {
-            const sorted = [...todoList].sort((a, b) =>
+            const sorted = [...dummyConst].sort((a, b) =>
 
                 a.toDo.toString().toLowerCase() > b.toDo.toString().toLowerCase() ? 1 : -1
 
             );
 
-            setTodoList(sorted);
+            setDummyConst(sorted);
             setOrderToDO("ASC");
             //logToDoList();
         }
@@ -39,41 +40,40 @@ const TodoTable = () => {
     // sorting according to date
     const sortingDate = () => {
         if (orderDate === 'ASC') {
-            const sorted = [...todoList].sort((a, b) =>
+            const sorted = [...dummyConst].sort((a, b) =>
 
                 a.date < b.date ? 1 : -1
 
             );
 
-            setTodoList(sorted);
+            setDummyConst(sorted);
             setOrderDate("DSC");
         }
         if (orderDate === 'DSC') {
-            const sorted = [...todoList].sort((a, b) =>
+            const sorted = [...dummyConst].sort((a, b) =>
 
                 a.date > b.date ? 1 : -1
 
             );
 
-            setTodoList(sorted);
+            setDummyConst(sorted);
             setOrderDate("ASC");
         }
     }
 
     return (
         <div>
-            <table className=" w-full text-sm text-left text-gray-700">
-                <thead className='text-xs text-gray-700 uppercase bg-gray-50
-                 dark:bg-gray-700 dark:text-slate-200'>
+            <table className=" w-full text-sm text-left shadow-xl">
+                <thead className='text-xs text-gray-200 uppercase bg-stone-900 '>
                     <tr>
                         <th className='py-3 px-6 cursor-pointer'>
                             <p onClick={() => sortingToDo()}>
                                 toDo
                                 {
                                     orderToDo === 'ASC' ?
-                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-stone-800">
                                             ASC</span>) : (
-                                            <span className="mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                            <span className="mx-2 px-1 bg-gray-300 rounded text-stone-800">
                                                 DSC</span>)
                                 }
                             </p>
@@ -85,22 +85,20 @@ const TodoTable = () => {
                                 date
                                 {
                                     orderDate === 'ASC' ?
-                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                        (<span className=" mx-2 px-1 bg-gray-300 rounded text-stone-800">
                                             ASC</span>) : (
-                                            <span className="mx-2 px-1 bg-gray-300 rounded text-slate-800">
+                                            <span className="mx-2 px-1 bg-gray-300 rounded text-stone-800">
                                                 DSC</span>)
                                 }
                             </p>
                         </th>
                         <th className='py-3 px-6'></th>
-                        <th className='py-3 px-6'></th>
                     </tr>
                 </thead>
                 {
-
-                    todoList.map((todo) => (
+                    dummyConst ? dummyConst.map((todo) => (
                         <ToDoListComponent key={todo.toDo} list={todo} />
-                    ))
+                    )) : null
                 }
             </table>
         </div>

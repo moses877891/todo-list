@@ -1,14 +1,12 @@
 import { useContext } from "react";
 
 import { SubTaskContext } from "../../context/subtask.context";
-import { SubTaskModalContext } from "../../context/subTaskmodal.context";
 
-import SubtaskComponent from "../../components/subtask-table/subtask-table.component";
+import SubtaskListComponent from "../../components/subtask-list/subtask-list.component";
 
 const SubTaskPage = () => {
 
     const { subtask } = useContext(SubTaskContext);
-    const { showSubTaskModal, setShowSubTaskModal } = useContext(SubTaskModalContext);
 
     // const subTaksList = todoList.reduce((group, list) => {
     //     const { toDo } = list;
@@ -17,14 +15,11 @@ const SubTaskPage = () => {
     //     return group;
     // }, {})
 
-    const toggleSubTaskModal = () => setShowSubTaskModal(!showSubTaskModal);
-
     return (
 
-        <div>
-            <table className=" w-full text-sm text-left text-gray-700">
-                <thead className='text-xs text-gray-700 uppercase bg-gray-50
-         dark:bg-gray-700 dark:text-slate-200'>
+        <div className="pb-10 pt-3" id="subtask_section">
+            <table className=" w-full text-sm text-left text-gray-700 shadow-2xl">
+                <thead className='text-xs text-gray-200 uppercase bg-stone-900'>
                     <tr>
                         <th className='py-3 px-6 cursor-pointer'>
                             toDo
@@ -35,25 +30,15 @@ const SubTaskPage = () => {
                             date
                         </th>
                         <th className='py-3 px-6'></th>
-                        <th className='py-3 px-6'></th>
                     </tr>
                 </thead>
                 {
 
                     subtask.map((todo) => (
-                        <SubtaskComponent key={todo.toDo} subtask={todo} />
+                        <SubtaskListComponent key={todo.toDo} subtask={todo} />
                     ))
                 }
             </table>
-            <button
-                className=' text-xl text-neutral-700 hover:text-neutral-200 bg-slate-300
-                rounded-lg hover:bg-slate-500 px-3 hover:shadow-md my-6 py-1 w-full 
-                dark:bg-gray-700 dark:text-neutral-200 dark:hover:bg-gray-800'
-                type='button'
-                onClick={toggleSubTaskModal}
-            >
-                + Add Subtask
-            </button>
         </div>
     )
 }

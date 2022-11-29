@@ -6,7 +6,7 @@ const Navigation = () => {
 
     return (
         <>
-            <div className='flex justify-between pt-2 px-3 pb-4 border-b'>
+            <div className='flex justify-between pt-2 px-3 pb-4 border-b bg-white'>
                 <Link to='/' className=' font-semibold text-3xl'>ToDo List</Link>
             </div>
             <Outlet />
